@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 # from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,UserChangeForm
-from django.contrib.auth import login,authenticate,update_session_auth_hash
+from django.contrib.auth import login,authenticate,update_session_auth_hash,logout
 from authenticationdemoapp.forms import SignUpForm, UserChangeProfileForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -72,5 +72,11 @@ def DeleteAcount(request):
        request.user.delete()
        return redirect('LoginPage')
     return render(request,'athenticationdemoapp/deleteAccount.html') # for get request
+
+
+def LogOut(request):
+    logout(request)
+    return redirect('LoginPage')
+    
    
    
