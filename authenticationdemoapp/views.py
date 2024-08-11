@@ -64,3 +64,13 @@ def ChangeProfile(request):
     else:
         form = UserChangeProfileForm(instance=request.user)
     return render(request,'athenticationdemoapp/changeProfile.html',{'form':form})
+
+
+@login_required
+def DeleteAcount(request):
+    if request.method == 'POST':
+       request.user.delete()
+       return redirect('LoginPage')
+    return render(request,'athenticationdemoapp/deleteAccount.html') # for get request
+   
+   

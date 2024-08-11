@@ -1,0 +1,14 @@
+{% extends "./base.html" %}
+{% load bootstrap5 %}
+{% block contentPage %}
+<div class="row d-flex justify-content-center">
+    <div class="col-5 d-flex flex-column justify-content-center" style="height: 80vh;">
+        <form action="" method="post">
+            {% csrf_token %}
+            <h1 class="text-primary my-3">Delete Account</h1>
+            <p class="text-muted">Are you sure to delete this Account ?</p>
+            <button type="submit" class="btn btn-danger">Confire Delete</button>
+        </form>
+    </div>
+</div>
+{% endblock contentPage %}
