@@ -1,0 +1,18 @@
+{% extends "./base.html" %}
+{% load bootstrap5 %}
+{% block contentPage %}
+<div class="row d-flex justify-content-center">
+    <div class="col-5 d-flex flex-column justify-content-center" style="height: 80vh;">
+        <h1 class="text-primary my-3 text-center">Change Profile</h1>
+        <div class="form-group">
+            <form action="" method='post'>
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="d-flex flex-row justify-content-between">
+                    <button type="submit" class="btn btn-primary">Confirem Change</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock contentPage %}
