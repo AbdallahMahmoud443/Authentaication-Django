@@ -3,11 +3,11 @@
 {% block contentPage %}
 <div class="row d-flex justify-content-center">
     <div class="col-5 d-flex flex-column justify-content-center" style="height: 80vh;">
-        <h1 class="text-primary my-3">Registeration Form</h1>
+        <h1 class="text-primary my-3">Login Form</h1>
         <form action="" method='post'>
             {% csrf_token %}
             {% bootstrap_form form %}
-            <button type="submit" class="btn btn-primary">SignUp</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 </div>

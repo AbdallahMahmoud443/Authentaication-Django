@@ -1,0 +1,19 @@
+{% extends "./base.html" %}
+{% load bootstrap5 %}
+{% block contentPage %}
+<div class="row d-flex justify-content-center">
+    <div class="col d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
+        <h1 class="text-primary my-3">Home Page</h1>
+        <div class="card w-50">
+            <div class="card-header">
+              User in Website
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"> {{user.username}}</h5>
+              <p class="card-text text-muted">Email:{{user.email}}.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+    </div>
+</div>
+{% endblock contentPage %}
