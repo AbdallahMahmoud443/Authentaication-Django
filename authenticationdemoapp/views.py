@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 # from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login,authenticate
+from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm
+from django.contrib.auth import login,authenticate,update_session_auth_hash
 from authenticationdemoapp.forms import SignUpForm
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -33,10 +33,22 @@ def Login(request):
            password = form.cleaned_data.get('password')
            # check user in database
            user = authenticate(request,username=userName,password=password) 
-           print(user)
            if user is not None:
                 login(request,user)
            return redirect('HomePage') 
     else:
         form = AuthenticationForm()
     return render(request,'athenticationdemoapp/login.html',{'form':form})
+
+
+@login_required
+def ChangePassword(request):
+    if request.method == 'POST':
+       form = PasswordChangeForm(request.user,request.POST)
+       if form.is_valid():
+          user = form.save()
+          update_session_auth_hash(request,user) #! Important to Maintain the session
+          return redirect('HomePage')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request,'athenticationdemoapp/changePassword.html',{'form':form})
