@@ -12,7 +12,7 @@
               <h5 class="card-title"> {{user.username}}</h5>
               <p class="card-text text-muted">Email:{{user.email}}.</p>
               <a href="{% url 'ChangePasswordPage' %}"class="btn btn-primary">Change Password</a>
-              <a href="cc"class="btn btn-success">Change Profile</a>
+              <a href="{% url 'ChangeProfilePage' %}"class="btn btn-success">Change Profile</a>
               <a type="button" class="btn btn-danger" href="{% url 'DeleteAcountPage' %}">Delete Account</a>
               <a type="button" class="btn btn-primary" href="{% url 'LogOutPage' %}">Logout</a>
             </div>

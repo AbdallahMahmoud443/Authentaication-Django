@@ -125,3 +125,6 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'LoginPage' #! Important To Redirect users to login page when user not log in website
+AUTH_USER_MODEL = 'authenticationdemoapp.customuser' #! Important for customize user Model
+
+
