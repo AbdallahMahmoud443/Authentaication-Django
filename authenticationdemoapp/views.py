@@ -1,11 +1,12 @@
 
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 # from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,UserChangeForm
 from django.contrib.auth import login,authenticate,update_session_auth_hash,logout
 from authenticationdemoapp.forms import RoleForm, SignUpForm, UserChangeProfileForm
 from django.contrib.auth.decorators import login_required,user_passes_test
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group,User
 # Create your views here.
 
 
@@ -110,4 +111,28 @@ def CreateRole(request):
         
     return render(request,'athenticationdemoapp/createRole.html',{'form':form})
     
-    
+@login_required
+@user_passes_test(is_superuser) # check if user is admin or not 
+def UpdateRole(request,role_id):
+    role = Group.objects.get(pk=role_id)
+    if request.method == "POST":
+        form = RoleForm(request.POST,instance=role)
+        if form.is_valid():
+            form.save()
+            return redirect('RoleListPage')
+    else:
+        form = RoleForm(instance=role)
+        
+    return render(request,'athenticationdemoapp/updateRole.html',{'form':form})
+
+@login_required
+@user_passes_test(is_superuser) # check if user is admin or not 
+def DeleteRole(request,role_id):
+    role = Group.objects.get(pk=role_id)
+    group_uers = User.objects.filter(groups__name=role).count() # can't delete group which have users
+    if group_uers == 0:
+       role.delete()
+       return redirect('RoleListPage')
+    else:
+        ErrorMessage ='This Role Cannot Be Deleted...as it has users'
+        return HttpResponse(ErrorMessage)

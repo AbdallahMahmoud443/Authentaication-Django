@@ -11,5 +11,8 @@ urlpatterns = [
     path('logout/',views.LogOut,name='LogOutPage'),
     
     path('roleslist/',views.RolesList,name='RoleListPage'),
-    path('createlist/',views.CreateRole,name='CreateRolePage'),
+    path('createrole/',views.CreateRole,name='CreateRolePage'),
+    path('updaterole/<int:role_id>/',views.UpdateRole,name='UpdateRolePage'),
+    path('deleterole/<int:role_id>/',views.DeleteRole,name='DeleteRolePage'),
+    
 ]

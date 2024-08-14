@@ -49,6 +49,13 @@
         </div>
       </div>
     </footer>
-    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn-script.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+    <script>
+        function confirmdelete(roleId,roleName){
+        if (confirm(`Are you sure you want to delete ${roleName}?`)){
+          window.location.href = `{% url 'DeleteRolePage' role_id=0 %}`.replace(0,roleId)
+        }
+       }  
+    </script>
   </body>
 </html>
