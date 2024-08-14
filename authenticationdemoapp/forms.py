@@ -1,6 +1,7 @@
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,Group
 from django.contrib.auth.forms import UserChangeForm
 
 # from authenticationdemoapp.models import CustomUser
@@ -22,7 +23,7 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ['first_name','last_name','username','email']
         
-class UserChangeProfileForm(UserChangeForm): # make custom form because django get all fields in profiling change
+class UserChangeProfileForm(UserChangeForm): # make custom form because django get all fields in profiling change    
     # Customize the fields
     password =None
     first_name = forms.CharField(max_length=20, required=True)
@@ -37,3 +38,9 @@ class UserChangeProfileForm(UserChangeForm): # make custom form because django g
         # fields = ['first_name','last_name','username','email','country','address']
         model = User
         fields = ['first_name','last_name','username','email']
+        
+
+class RoleForm(forms.ModelForm):
+    class Meta:
+        model = Group
+        fields = ['name']

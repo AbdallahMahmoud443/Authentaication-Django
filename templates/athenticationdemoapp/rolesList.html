@@ -1,0 +1,22 @@
+{% extends "./base.html" %}
+{% load bootstrap5 %}
+{% block contentPage %}
+<div class="row d-flex justify-content-center">
+    <div class="col-5 d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
+        <h1 class="text-primary my-3 text-center">Roles List</h1>
+        <div class="card" style="width: 18rem;">
+            <div class="card-header bg-primary text-light">
+              <a href="{% url 'CreateRolePage'%}" class="btn btn-light">Create New Role</a>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for  role in roles %}
+                <li class="list-group-item"><span class="text-primary">{{role.id}}</span>- {{role.name}}</li> 
+                {% endfor %}
+            </ul>
+            <div class="card-footer">
+                <a type="button" class="text-primary text-decoration-none" href="{% url 'HomePage' %}">Back to home</a>
+              </div>
+          </div>
+    </div>
+</div>
+{% endblock contentPage %}

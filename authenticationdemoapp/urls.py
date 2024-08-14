@@ -8,5 +8,8 @@ urlpatterns = [
     path('changepassword/',views.ChangePassword,name='ChangePasswordPage'),
     path('changeprofile/',views.ChangeProfile,name='ChangeProfilePage'),
     path('deleteuser/',views.DeleteAcount,name='DeleteAcountPage'),
-    path('logout/',views.LogOut,name='LogOutPage')
+    path('logout/',views.LogOut,name='LogOutPage'),
+    
+    path('roleslist/',views.RolesList,name='RoleListPage'),
+    path('createlist/',views.CreateRole,name='CreateRolePage'),
 ]

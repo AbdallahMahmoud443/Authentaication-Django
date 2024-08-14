@@ -3,8 +3,8 @@ from django.shortcuts import redirect, render
 # from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,UserChangeForm
 from django.contrib.auth import login,authenticate,update_session_auth_hash,logout
-from authenticationdemoapp.forms import SignUpForm, UserChangeProfileForm
-from django.contrib.auth.decorators import login_required
+from authenticationdemoapp.forms import RoleForm, SignUpForm, UserChangeProfileForm
+from django.contrib.auth.decorators import login_required,user_passes_test
 from django.contrib.auth.models import Group
 # Create your views here.
 
@@ -87,5 +87,27 @@ def LogOut(request):
     logout(request)
     return redirect('LoginPage')
     
- 
-   
+    
+def is_superuser(user):
+    return  user.is_superuser
+    
+@login_required
+@user_passes_test(is_superuser) # check if user is admin or not 
+def RolesList(request):
+    roles = Group.objects.all()
+    return render(request,'athenticationdemoapp/rolesList.html',{'roles':roles})
+
+@login_required
+@user_passes_test(is_superuser) # check if user is admin or not 
+def CreateRole(request):
+    if request.method == "POST":
+        form = RoleForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('RoleListPage')
+    else:
+        form = RoleForm()
+        
+    return render(request,'athenticationdemoapp/createRole.html',{'form':form})
+    
+    
