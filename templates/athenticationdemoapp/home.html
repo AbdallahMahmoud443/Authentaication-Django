@@ -6,15 +6,37 @@
         <h1 class="text-primary my-3">Home Page</h1>
         <div class="card w-50">
             <div class="card-header bg-primary text-light">
-              User in Website
+              {% if  user.is_superuser%}
+                Admin User in Website
+              {% else %}
+                User in Website
+              {% endif %}
+              
             </div>
             <div class="card-body">
-              <h5 class="card-title"> {{user.username}}</h5>
-              <p class="card-text text-muted">Email:{{user.email}}.</p>
-              <a href="{% url 'ChangePasswordPage' %}"class="btn btn-primary">Change Password</a>
-              <a href="{% url 'ChangeProfilePage' %}"class="btn btn-success">Change Profile</a>
-              <a type="button" class="btn btn-danger" href="{% url 'DeleteAcountPage' %}">Delete Account</a>
-              <a type="button" class="btn btn-primary" href="{% url 'LogOutPage' %}">Logout</a>
+              <h5 class="card-title">{{user.username}}</h5>
+              <p class="card-text text-muted">Email: {{user.email}}</p>
+            
+              <div class="card" style="width: 18rem;">
+                <div class="card-header bg-primary text-light">
+                  Actions
+                </div>
+                <ul class="list-group list-group-flush">
+                  {% if not user.is_superuser %}
+                  <li class="list-group-item"><a href="{% url 'ChangePasswordPage' %}"class="text-primary text-decoration-none">Change Password</a></li>
+                  <li class="list-group-item"><a href="{% url 'ChangeProfilePage' %}"class="text-primary text-decoration-none">Change Profile</a></li>
+                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'DeleteAcountPage' %}">Delete Account</a></li>
+                  {% endif %}
+                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'LogOutPage' %}">Logout</a></li>
+
+                </ul>
+              </div>
+            
+             
+          
+          
+            
+
             </div>
           </div>
     </div>

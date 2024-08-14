@@ -1,9 +1,11 @@
+
 from django.shortcuts import redirect, render
 # from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,UserChangeForm
 from django.contrib.auth import login,authenticate,update_session_auth_hash,logout
 from authenticationdemoapp.forms import SignUpForm, UserChangeProfileForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 # Create your views here.
 
 
@@ -13,6 +15,13 @@ def SignIn(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save()
+            
+            # Users add by default to (customer) group
+            # Add User to the Customer's Group 
+            customers_group,created = Group.objects.get_or_create(name='Customer') # create User
+            print(created) # for explain => return Boolean
+            user.groups.add(customers_group)  # add user in this group
+            
             login(request,user) # make User Login After SignUp
             return redirect('HomePage')
     else:
@@ -78,5 +87,5 @@ def LogOut(request):
     logout(request)
     return redirect('LoginPage')
     
-   
+ 
    
