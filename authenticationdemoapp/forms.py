@@ -13,12 +13,14 @@ class SignUpForm(UserCreationForm):
     last_name = forms.CharField(max_length=20, required=True)
     username = forms.CharField(max_length=20, required=True)
     email = forms.CharField(max_length=100,required=True)
-    country = forms.ChoiceField(choices=CustomUser.COUNTRY_CHOICES,required=True)
-    address = forms.CharField(max_length=30,required=True)
+    # country = forms.ChoiceField(choices=CustomUser.COUNTRY_CHOICES,required=True)
+    # address = forms.CharField(max_length=30,required=True)
     
     class Meta:
-        model = CustomUser
-        fields = ['first_name','last_name','username','email','country','address']
+        #model = CustomUser
+        #fields = ['first_name','last_name','username','email','country','address']
+        model = User
+        fields = ['first_name','last_name','username','email']
         
 class UserChangeProfileForm(UserChangeForm): # make custom form because django get all fields in profiling change
     # Customize the fields
@@ -27,8 +29,11 @@ class UserChangeProfileForm(UserChangeForm): # make custom form because django g
     last_name = forms.CharField(max_length=20, required=True)
     username = forms.CharField(max_length=20, required=True)
     email = forms.CharField(max_length=100,required=True)
-    country = forms.ChoiceField(choices=CustomUser.COUNTRY_CHOICES,required=True)
-    address = forms.CharField(max_length=30,required=True)
+    # country = forms.ChoiceField(choices=CustomUser.COUNTRY_CHOICES,required=True)
+    # address = forms.CharField(max_length=30,required=True)
+    
     class Meta:
-        model = CustomUser
-        fields = ['first_name','last_name','username','email','country','address']
+        # model = CustomUser
+        # fields = ['first_name','last_name','username','email','country','address']
+        model = User
+        fields = ['first_name','last_name','username','email']
