@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User,Group
 from django.contrib.auth.forms import UserChangeForm
+from sqlalchemy import false
 
 # from authenticationdemoapp.models import CustomUser
 
@@ -39,8 +40,21 @@ class UserChangeProfileForm(UserChangeForm): # make custom form because django g
         model = User
         fields = ['first_name','last_name','username','email']
         
-
 class RoleForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = ['name']
+        
+class CreateStaffEmployeeForm(UserCreationForm):
+    role = forms.ModelChoiceField(queryset=Group.objects.all(),required=false) #! Trick
+    class Meta:
+        model=User
+        fields = ['first_name','last_name','username','email','role']
+        
+class UpdateStaffEmployeeForm(UserChangeForm):
+    role = forms.ModelChoiceField(queryset=Group.objects.all(),required=false) #! Trick
+    password =None
+    class Meta:
+        model=User
+        fields = ['first_name','last_name','username','email','role']
+

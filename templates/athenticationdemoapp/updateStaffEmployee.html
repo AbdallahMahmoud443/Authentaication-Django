@@ -1,0 +1,20 @@
+{% extends "./base.html" %}
+{% load bootstrap5 %}
+{% block contentPage %}
+<div class="row d-flex justify-content-center">
+    <div class="col-5 d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+        <h1 class="text-primary my-3 text-center">Update Staff Employee</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="flex justify-content-between">
+                        <button class="btn btn-primary">Update Staff Employee</button>
+                        <a type="button" class="text-primary text-decoration-none" href="{% url 'StaffListPage' %}">Back to Staff List</a>
+                    </div>
+                </form>
+    </div>
+</div>
+<script>
+ 
+</script>
+{% endblock contentPage %}

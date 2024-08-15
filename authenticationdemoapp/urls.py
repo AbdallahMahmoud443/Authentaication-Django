@@ -15,4 +15,9 @@ urlpatterns = [
     path('updaterole/<int:role_id>/',views.UpdateRole,name='UpdateRolePage'),
     path('deleterole/<int:role_id>/',views.DeleteRole,name='DeleteRolePage'),
     
+    path('stafflist/',views.StaffList,name='StaffListPage'),
+    path('createemployee/',views.CreateStaffEmployee,name='CreateStaffEmployeePage'),
+    path('updatecreareemployee/<int:user_id>/',views.UpdateStaffEmployee,name='UpdateStaffEmployeePage'),
+    path('deletecreareemployee/<int:user_id>/',views.DeleteStaffEmployee,name='DeleteStaffEmployeePage'),
+    
 ]

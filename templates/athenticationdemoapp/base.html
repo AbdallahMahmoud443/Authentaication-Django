@@ -56,6 +56,10 @@
           window.location.href = `{% url 'DeleteRolePage' role_id=0 %}`.replace(0,roleId)
         }
        }  
+       // Update Staff User
+       $(document).ready(function(){
+        $('#id_role').val('{{staff_group.id}}')
+    });
     </script>
   </body>
 </html>

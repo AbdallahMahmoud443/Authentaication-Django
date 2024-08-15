@@ -1,0 +1,49 @@
+{% extends "./base.html" %}
+{% load bootstrap5 %}
+{% block contentPage %}
+<div class="row d-flex justify-content-center">
+    <div class="col-12 d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
+        <h1 class="text-primary my-3 text-center">Staff List</h1>
+        <a type="button" class="btn btn-primary align-self-start my-2" href="{% url 'CreateStaffEmployeePage' %}">Add new staff employee</a>
+
+        <table class="table table-striped">
+            <thead >
+              <tr>
+                <th scope="col">id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">UserName</th>
+                <th scope="col">Email</th>
+                <th scope="col">Last Login</th>
+                <th scope="col">Group</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for  staff_member in staff_members %}
+              <tr>
+                <th scope="row">{{staff_member.id}}</th>
+                <th scope="row">{{staff_member.first_name}}</th>
+                <th scope="row">{{staff_member.last_name}}</th>
+                <th scope="row">{{staff_member.username}}</th>
+                <th scope="row">{{staff_member.email}}</th>
+                <th scope="row">{{staff_member.last_login}}</th>
+                <th scope="row">
+                  {% for group in staff_member.groups.all %}
+                  {{group.name}}
+                  {% endfor %}
+                </th>
+                  <th scope="row " class="d-flex justify-content-evenly">
+                    <a type="button" class="btn btn-success" href="{% url 'UpdateStaffEmployeePage' staff_member.id%}">Update</a>
+                    <a type="button" class="btn btn-danger" href="{% url 'DeleteStaffEmployeePage' staff_member.id%}">Delete</a>
+                  </th>
+                  
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+        <a type="button" class="text-primary text-decoration-none" href="{% url 'HomePage' %}">Back to home</a>
+    </div>
+</div>
+
+{% endblock contentPage %}
