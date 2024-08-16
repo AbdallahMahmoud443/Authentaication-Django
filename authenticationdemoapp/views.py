@@ -181,7 +181,6 @@ def UpdateStaffEmployee(request,user_id):
         # Get Group 
         staff_group = Group.objects.get(name=groupName) # select group
         form =UpdateStaffEmployeeForm(instance=user)
-    
     return render(request,'athenticationdemoapp/updateStaffEmployee.html',{'form':form,'staff_group':staff_group})
 
 @login_required
