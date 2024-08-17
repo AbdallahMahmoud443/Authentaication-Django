@@ -4,7 +4,7 @@
 <div class="row d-flex justify-content-center">
     <div class="col-5 d-flex flex-column justify-content-center align-items-center" style="height: 80vh;">
         <h1 class="text-primary my-3 text-center">Roles List</h1>
-        <div class="card" style="width: 40rem;">
+        <div class="card" style="width: 60rem;">
             <div class="card-header bg-primary text-light">
               <a href="{% url 'CreateRolePage'%}" class="btn btn-light">Create New Role</a>
             </div>
@@ -16,7 +16,8 @@
                         </span>
                         <span class="float-end">
                             <a href="{% url 'UpdateRolePage' role.id %}" class="btn btn-sm btn-primary">update Role</a>
-                            <a href="#" class="btn btn-sm btn-danger" onclick="confirmdelete('{{role.id}}','{{role.name}}')">Delete Role</a> 
+                            <a href="#" class="btn btn-sm btn-danger" onclick="confirmdelete('{{role.id}}','{{role.name}}')">Delete Role</a>
+                            <a class="btn btn-sm btn-success" href="{% url 'AssociatePermissionsPage' role.id%}">Add Permissions</a> 
                         </span>
                 </li> 
               

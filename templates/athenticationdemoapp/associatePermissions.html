@@ -1,0 +1,30 @@
+{% extends "./base.html" %} {% load bootstrap5 %} {% block contentPage %}
+<div class="row d-flex justify-content-center">
+  <div
+    class="col-8 d-flex flex-column justify-content-center align-items-center"
+    style="height: 80vh"
+  >
+    <h1 class="text-primary my-3 text-center">Associate Permissions To {{role.name}} Group</h1>
+    <form method="post">
+      {% csrf_token %} 
+      {% for permission in all_permissions%}
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="permissions"
+        value="{{permission.id}}" id="flexCheckDefault" {% if permission in role.permissions.all %}checked{% endif %} />  
+        {% comment "check all user  permission" %}{% endcomment %} 
+        <label class="form-check-label" for="flexCheckDefault">{{permission.name}}</label>
+      </div>
+      {% endfor %}
+      <div class="flex justify-content-between my-2">
+        <button class="btn btn-primary" type="submit">Add Permissions</button>
+        <a
+          type="button"
+          class="text-primary text-decoration-none "
+          href="{% url 'RoleListPage' %}"
+          >Back to Roles List</a
+        >
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock contentPage %}

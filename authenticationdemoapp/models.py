@@ -15,7 +15,7 @@ from django.contrib.auth.models import AbstractUser,Group,Permission
 
 
 class CustomPermissions(models.Model):
-    #! Create one to one between CustomPermissions and Permission type is important
+    #! Create one to one between CustomPermissions and Permission type is important (customPermission type)
     permissions = models.OneToOneField(Permission,on_delete=models.CASCADE,primary_key=True)
     
     def __str__(self):

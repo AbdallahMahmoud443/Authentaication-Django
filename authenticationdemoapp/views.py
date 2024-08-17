@@ -6,7 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm,PasswordChangeForm,User
 from django.contrib.auth import login,authenticate,update_session_auth_hash,logout
 from authenticationdemoapp.forms import CreateStaffEmployeeForm, RoleForm, SignUpForm, UpdateStaffEmployeeForm, UserChangeProfileForm
 from django.contrib.auth.decorators import login_required,user_passes_test
-from django.contrib.auth.models import Group,User
+from django.contrib.auth.models import Group,User,Permission
+from django.contrib import messages
 # Create your views here.
 
 
@@ -189,3 +190,26 @@ def DeleteStaffEmployee(request,user_id):
     user = User.objects.get(pk=user_id)
     user.delete()
     return redirect('StaffListPage')
+
+@login_required
+@user_passes_test(is_superuser)
+def AssociatePermissions(request,role_id):
+    role = Group.objects.get(pk=role_id) # Get Role
+    relevant_permissions = ['add_staff','update_staff','view_staff','delete_staff'] # All custome permission names
+    if request.method == "POST":
+        try:
+       
+            selected_permission_ids = request.POST.getlist('permissions') # Get All Ids
+            selected_permissions = Permission.objects.filter(pk__in=selected_permission_ids) # Get Permission
+            role.permissions.set(selected_permissions) # Add Permissions in specific Role
+            messages.success(request,"Permission Associated Successfully")
+            return redirect('RoleListPage')
+        
+        except Exception as e:
+            print(f"Error Associating Permission:{e}")
+            messages.success(request,"An Erro Occur while Associating permission,Please Try Again")
+    else:
+        all_permissions = Permission.objects.filter(codename__in=relevant_permissions) # get all custom permissions
+        
+    return render(request,'athenticationdemoapp/associatePermissions.html',{'role':role,'all_permissions':all_permissions})
+    

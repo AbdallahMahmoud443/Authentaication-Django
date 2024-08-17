@@ -20,4 +20,6 @@ urlpatterns = [
     path('updatecreareemployee/<int:user_id>/',views.UpdateStaffEmployee,name='UpdateStaffEmployeePage'),
     path('deletecreareemployee/<int:user_id>/',views.DeleteStaffEmployee,name='DeleteStaffEmployeePage'),
     
+    path('associatepermission/<int:role_id>/',views.AssociatePermissions,name='AssociatePermissionsPage'),
+    
 ]
