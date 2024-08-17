@@ -11,6 +11,23 @@ from django.contrib import messages
 # Create your views here.
 
 
+#* Create Custom decorator for validation role of user to access FBV for specific user
+# Important for security issues
+from functools import wraps
+def user_has_role_or_superuser(roles): # user_has_role_or_superuser accept roles
+    def decorator(view_func): # decorator accept (view function) is built in function
+        @wraps(view_func)  #! Important step to wrapper view function
+        @login_required # must user is loggedin
+        def _wrapped_view(request,*args,**kwargs): # check function
+            user_groups = request.user.groups.all().values_list('name',flat=True)
+            if request.user.is_superuser or any(role in user_groups for role in roles):
+               return view_func(request,*args,**kwargs)
+            else:
+                return redirect('HomePage')
+        return _wrapped_view
+    return decorator
+
+
 def SignIn(request):
     #form = UserCreationForm()
     if request.method == 'POST':
@@ -92,7 +109,7 @@ def is_superuser(user):
     return  user.is_superuser
     
 @login_required
-@user_passes_test(is_superuser) # check if user is admin or not 
+@user_passes_test(is_superuser) # check if user is admin or not Default decorator in django
 def RolesList(request):
     roles = Group.objects.all()
     return render(request,'athenticationdemoapp/rolesList.html',{'roles':roles})
@@ -138,13 +155,18 @@ def DeleteRole(request,role_id):
 
 
 @login_required
-@user_passes_test(is_superuser)
+#@user_passes_test(is_superuser)
+@user_has_role_or_superuser(['HR','HR Senior','HR Manager'])
 def StaffList(request):
     staff_members = User.objects.filter(is_staff=True)
-    return render(request,'athenticationdemoapp/staff_list.html',{'staff_members':staff_members})
+    user_groups = request.user.groups.all().values_list('name',flat=True)
+    print(user_groups)
+    return render(request,'athenticationdemoapp/staff_list.html',{'staff_members':staff_members,
+                                                                  'user_groups':user_groups})
 
 @login_required
-@user_passes_test(is_superuser)
+#@user_passes_test(is_superuser)
+@user_has_role_or_superuser(['HR'])
 def CreateStaffEmployee(request):
     if request.method =="POST":
        form=CreateStaffEmployeeForm(request.POST)
@@ -162,7 +184,8 @@ def CreateStaffEmployee(request):
     return render(request,'athenticationdemoapp/createStaffEmployee.html',{'form':form})
 
 @login_required
-@user_passes_test(is_superuser)
+#@user_passes_test(is_superuser)
+@user_has_role_or_superuser(['HR Senior'])
 def UpdateStaffEmployee(request,user_id):
     # Get User
     user = User.objects.get(pk=user_id)
@@ -185,11 +208,13 @@ def UpdateStaffEmployee(request,user_id):
     return render(request,'athenticationdemoapp/updateStaffEmployee.html',{'form':form,'staff_group':staff_group})
 
 @login_required
-@user_passes_test(is_superuser)
+#@user_passes_test(is_superuser)
+@user_has_role_or_superuser(['HR Manager'])
 def DeleteStaffEmployee(request,user_id):
     user = User.objects.get(pk=user_id)
     user.delete()
     return redirect('StaffListPage')
+
 
 @login_required
 @user_passes_test(is_superuser)
@@ -204,7 +229,6 @@ def AssociatePermissions(request,role_id):
             role.permissions.set(selected_permissions) # Add Permissions in specific Role
             messages.success(request,"Permission Associated Successfully")
             return redirect('RoleListPage')
-        
         except Exception as e:
             print(f"Error Associating Permission:{e}")
             messages.success(request,"An Erro Occur while Associating permission,Please Try Again")
@@ -212,4 +236,7 @@ def AssociatePermissions(request,role_id):
         all_permissions = Permission.objects.filter(codename__in=relevant_permissions) # get all custom permissions
         
     return render(request,'athenticationdemoapp/associatePermissions.html',{'role':role,'all_permissions':all_permissions})
-    
+
+
+
+        

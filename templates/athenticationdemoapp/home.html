@@ -22,15 +22,16 @@
                   Actions
                 </div>
                 <ul class="list-group list-group-flush">
-                  {% if not user.is_superuser %}
+                  {% if  user.is_superuser %}
+                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'RoleListPage' %}">Roles List</a></li>
+                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'StaffListPage' %}">Staff List</a></li>
+                  {% elif user.is_staff and not user.is_superuser  %}
+                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'StaffListPage' %}">Staff List</a></li>
+                  {% endif %}
                   <li class="list-group-item"><a href="{% url 'ChangePasswordPage' %}"class="text-primary text-decoration-none">Change Password</a></li>
                   <li class="list-group-item"><a href="{% url 'ChangeProfilePage' %}"class="text-primary text-decoration-none">Change Profile</a></li>
                   <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'DeleteAcountPage' %}">Delete Account</a></li>
-                  {% endif %}
-                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'RoleListPage' %}">Roles List</a></li>
-                  <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'StaffListPage' %}">Staff List</a></li>
                   <li class="list-group-item"><a type="button" class="text-primary text-decoration-none" href="{% url 'LogOutPage' %}">Logout</a></li>
-
                 </ul>
               </div>
             
