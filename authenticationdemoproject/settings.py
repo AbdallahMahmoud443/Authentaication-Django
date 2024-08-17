@@ -128,3 +128,9 @@ LOGIN_URL = 'LoginPage' #! Important To Redirect users to login page when user n
 # AUTH_USER_MODEL = 'authenticationdemoapp.customuser' #! Important for customize user Model
 
 
+EMAIL_BACKEND ='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST ='smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS =True
+EMAIL_HOST_USER ='abdallahmahmoudeelu28@gmail.com'
+EMAIL_HOST_PASSWORD ='raadfbslwwluwaju' # this password created from gamil in app password for this app only incease security

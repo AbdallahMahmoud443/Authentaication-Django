@@ -24,7 +24,7 @@
             <tbody>
                 {% for  staff_member in staff_members %}
               <tr>
-                {% if  not staff_member.is_superuser %}
+                {% if  not staff_member.is_superuser  %}
                 <th scope="row">{{staff_member.id}}</th>
                 <th scope="row">{{staff_member.first_name}}</th>
                 <th scope="row">{{staff_member.last_name}}</th>
@@ -39,11 +39,11 @@
                   <th scope="row">
                     {% if user.is_superuser or 'HR Senior' in user_groups %}
                     <a type="button" class="btn btn-success" href="{% url 'UpdateStaffEmployeePage' staff_member.id%}">Update</a>
-                    {% elif user.is_superuser or 'HR Manager' in user_groups %}
+                    {% endif %}
+                    {% if user.is_superuser or 'HR Manager' in user_groups %}
                     <a type="button" class="btn btn-danger" href="{% url 'DeleteStaffEmployeePage' staff_member.id%}">Delete</a>
                     {% endif %}
                   </th>
-                  
               </tr>
               {% endif %}
               {% endfor %}
